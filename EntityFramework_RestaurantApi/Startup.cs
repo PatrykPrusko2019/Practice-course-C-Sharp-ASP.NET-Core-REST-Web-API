@@ -1,3 +1,4 @@
+using AutoMapper;
 using EntityFramework_RestaurantApi.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +30,7 @@ namespace EntityFramework_RestaurantApi
             services.AddControllers();
             services.AddDbContext<RestaurantDbContext>(); //registers context
             services.AddScoped<RestaurantSeeder>();
+            services.AddAutoMapper(this.GetType().Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

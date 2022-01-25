@@ -1,5 +1,8 @@
-﻿using EntityFramework_RestaurantApi.Entities;
+﻿using AutoMapper;
+using EntityFramework_RestaurantApi.Entities;
+using EntityFramework_RestaurantApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,35 +14,45 @@ namespace EntityFramework_RestaurantApi.Controllers
     public class RestaurantController : ControllerBase
     {
         private readonly RestaurantDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public RestaurantController(RestaurantDbContext dbContext)
+        public RestaurantController(RestaurantDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         //gets all restaurants
         [HttpGet]
-        public ActionResult<IEnumerable<Restaurant>> GetAll()
+        public ActionResult<IEnumerable<RestaurantDto>> GetAll()
         {
             var restaurants = _dbContext
                 .Restaurants
+                .Include(r => r.Address)
+                .Include(r => r.Dishes)
                 .ToList();
 
-            return Ok(restaurants);
+            var restaurantsDtos = _mapper.Map<List<RestaurantDto>>(restaurants);
+
+            return Ok(restaurantsDtos);
         }
 
         [HttpGet("{id}")] // api/restaurant/2
-        public ActionResult<Restaurant> Get([FromRoute] int id)
+        public ActionResult<RestaurantDto> Get([FromRoute] int id)
         {
             var restaurant = _dbContext
-                .Restaurants.FirstOrDefault(x => x.Id == id);
+                .Restaurants
+                .Include(r => r.Address)
+                .Include(r => r.Dishes)
+                .FirstOrDefault(x => x.Id == id);
             
             if (restaurant is null)
             {
                 return NotFound(); // status code 404
             }
 
-            return Ok(restaurant);
+            var restaurantDto = _mapper.Map<RestaurantDto>(restaurant);
+            return Ok(restaurantDto);
         }
     }
 }
