@@ -16,7 +16,7 @@ namespace EntityFramework_RestaurantApi.Entities
         public string PostalCode { get; set; }
 
 
-        public virtual Restaurant Restaurant { get; set; } //referencja do restauracji
+        public virtual Restaurant Restaurant { get; set; } //reference to the restaurant
     }
 
 

@@ -13,7 +13,7 @@ namespace EntityFramework_RestaurantApi.Entities
         public decimal Price { get; set; }
 
 
-        public int RestaurantId { get; set; } //property typu int
+        public int RestaurantId { get; set; } 
         public virtual Restaurant Restaurant { get; set; }
     }
 }

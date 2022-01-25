@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 namespace EntityFramework_RestaurantApi.Entities
 {
     /// <summary>
-    /// klasa reprezentujaca zaleznosci w bazie danych
+    /// class representing dependencies in the database
     /// </summary>
     public class RestaurantDbContext : DbContext
     {
         private string _connectionString = "Server=DESKTOP-C15FD30;Database=RestaurantDb;Trusted_Connection=True;";
-        public DbSet<Restaurant> Restaurants { get;  set; } // przyjmuje generyczny typ ktory reprezentuje dana tabele
+        public DbSet<Restaurant> Restaurants { get;  set; } // takes a generic type that represents the given table
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Dish> Dishes { get; set; }
 
 
-        //nazwa restauracji jest kolumna wymagana w bazie danych
+        //the name of the restaurant is a required column in the database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Restaurant>()
@@ -25,7 +25,7 @@ namespace EntityFramework_RestaurantApi.Entities
                 .IsRequired()
                 .HasMaxLength(25);
 
-            modelBuilder.Entity<Dish>() //nazwa dania jest wymagana
+            modelBuilder.Entity<Dish>() //dish name is required
                 .Property(d => d.Name)
                 .IsRequired();
 
@@ -40,7 +40,7 @@ namespace EntityFramework_RestaurantApi.Entities
                 .HasMaxLength(50);
         }
 
-        //skonfigurowanie polaczenia do bazy danych
+        //configuring a database connection
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(_connectionString);

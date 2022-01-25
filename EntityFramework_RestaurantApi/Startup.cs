@@ -27,14 +27,14 @@ namespace EntityFramework_RestaurantApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<RestaurantDbContext>(); //rejestrujemy context i kontekst seedujacy
+            services.AddDbContext<RestaurantDbContext>(); //registers context
             services.AddScoped<RestaurantSeeder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RestaurantSeeder seeder)
         {
-            seeder.Seed(); // uzupepnia danymi
+            seeder.Seed(); // completes the data
 
 
             if (env.IsDevelopment())

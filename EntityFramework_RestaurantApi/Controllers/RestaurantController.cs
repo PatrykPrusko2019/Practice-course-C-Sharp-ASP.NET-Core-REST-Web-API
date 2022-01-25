@@ -17,7 +17,7 @@ namespace EntityFramework_RestaurantApi.Controllers
             _dbContext = dbContext;
         }
 
-        //pobieramy wszystkie restauracje
+        //gets all restaurants
         [HttpGet]
         public ActionResult<IEnumerable<Restaurant>> GetAll()
         {

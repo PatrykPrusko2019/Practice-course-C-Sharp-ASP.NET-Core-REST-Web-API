@@ -22,14 +22,14 @@ namespace EntityFramework_RestaurantApi
                 {
                     var restaurants = GetRestaurants();
                     _dbContext.Restaurants.AddRange(restaurants);
-                    _dbContext.SaveChanges(); //zmiana w bazie danych -> te dane dodaje do tabeli restauracje
+                    _dbContext.SaveChanges(); //database changes -> this data adds to the restaurants table
                 }
 
             }
         }
 
 
-        //zwraca restauracje ktore beda zawsze istniec w tabeli restaurant
+        // returns restaurants that will always exist in the restaurant table
         private IEnumerable<Restaurant> GetRestaurants()
         {
             var restaurants = new List<Restaurant>()
