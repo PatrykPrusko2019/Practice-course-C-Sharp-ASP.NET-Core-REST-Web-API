@@ -21,6 +21,19 @@ namespace EntityFramework_RestaurantApi.Controllers
             _restaurantService = restaurantService;
         }
 
+        [HttpDelete("{id}")]
+        public ActionResult Delete([FromRoute] int id)
+        {
+            var isDeleted = _restaurantService.Delete(id);
+
+            if (isDeleted)
+            {
+                return NoContent(); // 204 status code
+            }
+
+            return NotFound(); // 404 status code
+        }
+
         [HttpPost]
         public ActionResult CreateRestautant([FromBody] CreateRestaurantDto dto)
         {
