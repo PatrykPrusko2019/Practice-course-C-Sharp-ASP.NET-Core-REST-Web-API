@@ -25,6 +25,11 @@ namespace EntityFramework_RestaurantApi.Controllers
         [HttpPost]
         public ActionResult CreateRestautant([FromBody] CreateRestaurantDto dto)
         {
+            if (! ModelState.IsValid ) // returns detailed error
+            {
+                return BadRequest(ModelState);
+            }
+
             var restaurant = _mapper.Map<Restaurant>(dto);
             _dbContext.Restaurants.Add(restaurant);
             _dbContext.SaveChanges();

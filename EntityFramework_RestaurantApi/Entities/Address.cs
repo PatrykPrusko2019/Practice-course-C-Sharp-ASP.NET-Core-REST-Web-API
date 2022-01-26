@@ -9,9 +9,7 @@ namespace EntityFramework_RestaurantApi.Entities
     public class Address
     {
         public int Id { get; set; }
-        [MaxLength(50)]
         public string City { get; set; }
-        [MaxLength(50)]
         public string Street { get; set; }
         public string PostalCode { get; set; }
 
