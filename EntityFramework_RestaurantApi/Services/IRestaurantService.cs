@@ -1,4 +1,5 @@
-﻿using EntityFramework_RestaurantApi.Models;
+﻿using EntityFramework_RestaurantApi.Entities;
+using EntityFramework_RestaurantApi.Models;
 using System.Collections.Generic;
 
 namespace EntityFramework_RestaurantApi.Services
@@ -9,5 +10,6 @@ namespace EntityFramework_RestaurantApi.Services
         IEnumerable<RestaurantDto> GetAll();
         RestaurantDto GetById(int id);
         bool Delete(int id);
+        bool Update(int id, UpdateRestaurantDto updateRestaurant);
     }
 }

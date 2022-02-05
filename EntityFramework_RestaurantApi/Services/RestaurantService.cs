@@ -71,5 +71,21 @@ namespace EntityFramework_RestaurantApi.Services
             return restaurant.Id;
         }
 
+        public bool Update(int id, UpdateRestaurantDto updateRestaurant)
+        {
+            var restaurant = _dbContext
+                .Restaurants
+                .FirstOrDefault(r => r.Id == id);
+
+            if (restaurant is null) return false;
+
+            restaurant.Name = updateRestaurant.Name;
+            restaurant.Description = updateRestaurant.Description;
+            restaurant.HasDelivery = updateRestaurant.HasDelivery;
+
+            _dbContext.SaveChanges();
+            return true;
+        }
+
     }
 }

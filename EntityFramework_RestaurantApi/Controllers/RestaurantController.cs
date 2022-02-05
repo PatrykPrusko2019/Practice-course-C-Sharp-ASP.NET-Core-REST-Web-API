@@ -68,5 +68,20 @@ namespace EntityFramework_RestaurantApi.Controllers
 
             return Ok(restaurant);
         }
+
+        [HttpPut("{id}")]
+        public ActionResult Update([FromBody] UpdateRestaurantDto updateRestaurant, [FromRoute]int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState); // client sent an invalid query
+            }
+
+           var isUpdated = _restaurantService.Update(id, updateRestaurant);
+
+            if (!isUpdated) return NotFound();
+
+            return Ok();
+        }
     }
 }
