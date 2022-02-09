@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace EntityFramework_RestaurantApi
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Main(string[] args)      
         {
             CreateHostBuilder(args).Build().Run();
         }
@@ -21,6 +22,7 @@ namespace EntityFramework_RestaurantApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+            .UseNLog();
     }
 }
