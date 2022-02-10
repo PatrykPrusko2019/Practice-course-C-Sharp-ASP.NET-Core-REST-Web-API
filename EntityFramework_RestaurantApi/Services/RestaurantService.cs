@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EntityFramework_RestaurantApi.Entities;
+using EntityFramework_RestaurantApi.Exceptions;
 using EntityFramework_RestaurantApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -23,7 +24,7 @@ namespace EntityFramework_RestaurantApi.Services
             _logger = logger;
         }
 
-        public bool Delete(int id)
+        public void Delete(int id)
         {
             _logger.LogError($"Restaurant with id: {id} DELETE action invoked");
             _logger.LogWarning($"Restaurant with id: {id} DELETE action invoked"); // saves information about the removal of the restaurant -> in the log file
@@ -32,12 +33,11 @@ namespace EntityFramework_RestaurantApi.Services
                 .Restaurants
                 .FirstOrDefault(x => x.Id == id);
 
-            if (restaurant is null) return false;
+            if (restaurant is null)
+                throw new NotFoundException("Restaurant not found");
 
             _dbContext.Restaurants.Remove(restaurant);
             _dbContext.SaveChanges();
-
-            return true;
         }
 
 
@@ -49,7 +49,8 @@ namespace EntityFramework_RestaurantApi.Services
                 .Include(r => r.Dishes)
                 .FirstOrDefault(x => x.Id == id);
 
-            if (restaurant is null) return null;
+            if (restaurant is null)
+                throw new NotFoundException("Restaurant not found");
 
             var result = _mapper.Map<RestaurantDto>(restaurant);
             return result;
@@ -77,20 +78,20 @@ namespace EntityFramework_RestaurantApi.Services
             return restaurant.Id;
         }
 
-        public bool Update(int id, UpdateRestaurantDto updateRestaurant)
+        public void Update(int id, UpdateRestaurantDto updateRestaurant)
         {
             var restaurant = _dbContext
                 .Restaurants
                 .FirstOrDefault(r => r.Id == id);
 
-            if (restaurant is null) return false;
+            if (restaurant is null)
+                throw new NotFoundException("Restaurant not found");
 
             restaurant.Name = updateRestaurant.Name;
             restaurant.Description = updateRestaurant.Description;
             restaurant.HasDelivery = updateRestaurant.HasDelivery;
 
             _dbContext.SaveChanges();
-            return true;
         }
 
     }

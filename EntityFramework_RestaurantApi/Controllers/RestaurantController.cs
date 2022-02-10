@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace EntityFramework_RestaurantApi.Controllers
 {
     [Route("api/restaurant")]
+    [ApiController]
     public class RestaurantController : ControllerBase
     {
         private readonly IRestaurantService _restaurantService;
@@ -24,23 +25,13 @@ namespace EntityFramework_RestaurantApi.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] int id)
         {
-            var isDeleted = _restaurantService.Delete(id);
-
-            if (isDeleted)
-            {
-                return NoContent(); // 204 status code
-            }
-
-            return NotFound(); // 404 status code
+            _restaurantService.Delete(id);
+            return NoContent(); // 204 status code
         }
 
         [HttpPost]
         public ActionResult CreateRestautant([FromBody] CreateRestaurantDto dto)
         {
-            if (! ModelState.IsValid ) // returns detailed error
-            {
-                return BadRequest(ModelState);
-            }
             var id = _restaurantService.Create(dto);
 
             return Created($"/api/restaurant/{id}", null);
@@ -61,25 +52,13 @@ namespace EntityFramework_RestaurantApi.Controllers
         {
             var restaurant = _restaurantService.GetById(id);
 
-            if (restaurant is null)
-            {
-                return NotFound(); // status code 404
-            }
-
             return Ok(restaurant);
         }
 
         [HttpPut("{id}")]
         public ActionResult Update([FromBody] UpdateRestaurantDto updateRestaurant, [FromRoute]int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState); // client sent an invalid query
-            }
-
-           var isUpdated = _restaurantService.Update(id, updateRestaurant);
-
-            if (!isUpdated) return NotFound();
+           _restaurantService.Update(id, updateRestaurant);
 
             return Ok();
         }
