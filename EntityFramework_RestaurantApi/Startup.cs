@@ -35,6 +35,7 @@ namespace EntityFramework_RestaurantApi
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddScoped<IRestaurantService, RestaurantService>(); // registration services
             services.AddScoped<ErrorHandlingMiddleware>();
+            services.AddSwaggerGen(); // Add swagger
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +51,12 @@ namespace EntityFramework_RestaurantApi
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
+
+            app.UseSwagger(); // Add swagger
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Restaurant API");
+            });
 
             app.UseRouting();
 
