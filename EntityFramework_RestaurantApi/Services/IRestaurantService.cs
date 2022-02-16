@@ -6,7 +6,7 @@ namespace EntityFramework_RestaurantApi.Services
 {
     public interface IRestaurantService
     {
-        int Create(CreateRestaurantDto dto);
+        int Create(CreateRestaurantDto dto); 
         IEnumerable<RestaurantDto> GetAll();
         RestaurantDto GetById(int id);
         void Delete(int id);

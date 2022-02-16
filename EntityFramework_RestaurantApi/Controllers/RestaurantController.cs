@@ -58,7 +58,7 @@ namespace EntityFramework_RestaurantApi.Controllers
         [HttpPut("{id}")]
         public ActionResult Update([FromBody] UpdateRestaurantDto updateRestaurant, [FromRoute]int id)
         {
-           _restaurantService.Update(id, updateRestaurant);
+            _restaurantService.Update(id, updateRestaurant);
 
             return Ok();
         }
