@@ -35,6 +35,7 @@ namespace EntityFramework_RestaurantApi
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddScoped<IRestaurantService, RestaurantService>(); // registration services
             services.AddScoped<ErrorHandlingMiddleware>();
+            services.AddScoped<RequestTimeMiddleware>();
             services.AddSwaggerGen(); // Add swagger
         }
 
@@ -49,6 +50,7 @@ namespace EntityFramework_RestaurantApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseMiddleware<RequestTimeMiddleware>();
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
 
