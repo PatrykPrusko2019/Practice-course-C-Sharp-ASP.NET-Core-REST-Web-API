@@ -24,6 +24,9 @@ namespace EntityFramework_RestaurantApi
 
             CreateMap<CreateRestaurantDto, Restaurant>()
                 .ForMember(r => r.Address, c => c.MapFrom(dto => new Address() { City = dto.City, PostalCode = dto.PostalCode, Street = dto.Street }));
+
+            //adds mapping from class CreateDishDto to class Dish
+            CreateMap<CreateDishDto, Dish>();
         }
     }
 }
