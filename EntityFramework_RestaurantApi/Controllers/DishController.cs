@@ -19,6 +19,22 @@ namespace EntityFramework_RestaurantApi.Controllers
             _dishService = dishService;
         }
 
+        //deletes all dishes from the restaurant
+        [HttpDelete]
+        public ActionResult DeleteAll([FromRoute] int restaurantId)
+        {
+            var result = _dishService.RemoveAll(restaurantId);
+            return Ok($"{result} deleted dishes from the restaurant (id -> {restaurantId})");
+        }
+
+        //deletes dish from the restaurant
+        [HttpDelete("{dishId}")]
+        public ActionResult Delete([FromRoute] int dishId)
+        {
+            var resultRestaurantId = _dishService.Remove(dishId);
+            return Ok($"deleted dish (id -> {dishId}) from the restaurant ( id -> {resultRestaurantId})");
+        }
+
 
         //adds dishes to the restaurant
         [HttpPost]
