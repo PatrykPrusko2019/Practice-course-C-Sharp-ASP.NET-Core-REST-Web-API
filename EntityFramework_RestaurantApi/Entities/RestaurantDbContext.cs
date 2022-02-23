@@ -15,11 +15,21 @@ namespace EntityFramework_RestaurantApi.Entities
         public DbSet<Restaurant> Restaurants { get;  set; } // takes a generic type that represents the given table
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Dish> Dishes { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
 
         //the name of the restaurant is a required column in the database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                .Property(u => u.Email)
+                .IsRequired();
+
+            modelBuilder.Entity<Role>()
+                .Property(r => r.Name)
+                .IsRequired();
+
             modelBuilder.Entity<Restaurant>()
                 .Property(r => r.Name)
                 .IsRequired()
