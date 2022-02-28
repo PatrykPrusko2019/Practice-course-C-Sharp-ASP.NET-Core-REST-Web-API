@@ -4,6 +4,7 @@ using EntityFramework_RestaurantApi.Middleware;
 using EntityFramework_RestaurantApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,6 +32,8 @@ namespace EntityFramework_RestaurantApi
             services.AddScoped<IDishService, DishService>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddScoped<RequestTimeMiddleware>();
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
             services.AddSwaggerGen(); // Add swagger
         }
 
