@@ -27,6 +27,7 @@ namespace EntityFramework_RestaurantApi
             services.AddScoped<RestaurantSeeder>();
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddScoped<IRestaurantService, RestaurantService>(); // registration services
+            services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IDishService, DishService>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddScoped<RequestTimeMiddleware>();
