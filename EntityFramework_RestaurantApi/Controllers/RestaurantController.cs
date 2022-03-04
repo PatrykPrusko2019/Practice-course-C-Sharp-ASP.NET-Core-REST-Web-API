@@ -1,15 +1,7 @@
-﻿using AutoMapper;
-using EntityFramework_RestaurantApi.Entities;
-using EntityFramework_RestaurantApi.Models;
+﻿using EntityFramework_RestaurantApi.Models;
 using EntityFramework_RestaurantApi.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EntityFramework_RestaurantApi.Controllers
 {
@@ -24,11 +16,11 @@ namespace EntityFramework_RestaurantApi.Controllers
             _restaurantService = restaurantService;
         }
 
-        [HttpDelete("{id}")]        
+        [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] int id)
         {
             _restaurantService.Delete(id);
-           
+
             return NoContent(); // 204 status code
         }
 
@@ -59,7 +51,7 @@ namespace EntityFramework_RestaurantApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult Update([FromBody] UpdateRestaurantDto updateRestaurant, [FromRoute]int id)
+        public ActionResult Update([FromBody] UpdateRestaurantDto updateRestaurant, [FromRoute] int id)
         {
             _restaurantService.Update(id, updateRestaurant);
 
