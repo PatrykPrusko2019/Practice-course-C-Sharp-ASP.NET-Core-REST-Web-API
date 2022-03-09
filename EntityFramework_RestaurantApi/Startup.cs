@@ -50,6 +50,10 @@ namespace EntityFramework_RestaurantApi
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
                 };
             });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("HasNationality", builder => builder.RequireClaim("Nationality"));
+            });
 
             services.AddControllers().AddFluentValidation();
             services.AddDbContext<RestaurantDbContext>(); //registers context

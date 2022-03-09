@@ -38,6 +38,7 @@ namespace EntityFramework_RestaurantApi.Controllers
 
         //gets all restaurants
         [HttpGet]
+        [Authorize(Policy = "HasNationality")]
         public ActionResult<IEnumerable<RestaurantDto>> GetAll()
         {
             var restaurantsDtos = _restaurantService.GetAll();
