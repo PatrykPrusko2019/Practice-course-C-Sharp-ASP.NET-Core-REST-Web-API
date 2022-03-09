@@ -1,5 +1,6 @@
 ﻿using EntityFramework_RestaurantApi.Models;
 using EntityFramework_RestaurantApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -7,6 +8,7 @@ namespace EntityFramework_RestaurantApi.Controllers
 {
     [Route("api/restaurant")]
     [ApiController]
+    [Authorize] 
     public class RestaurantController : ControllerBase
     {
         private readonly IRestaurantService _restaurantService;
@@ -25,6 +27,7 @@ namespace EntityFramework_RestaurantApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,Manager")]
         public ActionResult CreateRestautant([FromBody] CreateRestaurantDto dto)
         {
             var id = _restaurantService.Create(dto);
@@ -43,6 +46,7 @@ namespace EntityFramework_RestaurantApi.Controllers
         }
 
         [HttpGet("{id}")] // api/restaurant/2
+        [AllowAnonymous] // possible access without authorization
         public ActionResult<RestaurantDto> Get([FromRoute] int id)
         {
             var restaurant = _restaurantService.GetById(id);
