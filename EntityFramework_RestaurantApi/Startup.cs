@@ -1,4 +1,5 @@
 using AutoMapper;
+using EntityFramework_RestaurantApi.Authorization;
 using EntityFramework_RestaurantApi.Entities;
 using EntityFramework_RestaurantApi.Middleware;
 using EntityFramework_RestaurantApi.Models;
@@ -6,6 +7,7 @@ using EntityFramework_RestaurantApi.Models.Validators;
 using EntityFramework_RestaurantApi.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -51,10 +53,12 @@ namespace EntityFramework_RestaurantApi
                 };
             });
             services.AddAuthorization(options =>
-            {
+            {   //options.AddPolicy("HasNationality", builder => builder.RequireClaim("Nationality, "German", "Polish")); -> access only German or Polish nationality
                 options.AddPolicy("HasNationality", builder => builder.RequireClaim("Nationality"));
+                options.AddPolicy("Atleast20", builder => builder.AddRequirements(new MinimumAgeRequirement(20)));
             });
 
+            services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
             services.AddControllers().AddFluentValidation();
             services.AddDbContext<RestaurantDbContext>(); //registers context
             services.AddScoped<RestaurantSeeder>();
